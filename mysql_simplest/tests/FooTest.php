@@ -1,9 +1,11 @@
 <?php
 require_once dirname(__FILE__) . "/../src/Foo.php";
+require_once dirname(__FILE__) . "/_class/Nimo_Database_TestCase.php";
 
-class FooTest extends \PHPUnit_Extensions_Database_TestCase {
+// getConnection 和 getDataSet 交由 Nimo_Database_TestCase實作，所以這邊只要繼承
+//      Nimo_Database_TestCase 就可以了
+class FooTest extends Nimo_Database_TestCase {
 
-    // 共享連結資料庫的pdo和connection，防止無意義的重覆連結資料庫。
     static private $pdo = null;
     private $connection = null;
 
@@ -15,31 +17,25 @@ class FooTest extends \PHPUnit_Extensions_Database_TestCase {
     private static $db_password = "nimo";
 
     public function getConnection() {
-        // 這裡參考了官方手冊的建立連線方式，減少重覆連結的次數
-        if ($this->connection === null) {
-            if (self::$pdo == null) {
-                $dsn = self::$db_dsn_type
-                    .":host="  . self::$db_dsn_host
-                    .";dbname=". self::$db_dbname
-                ;
-                $account   = self::$db_account;
-                $password  = self::$db_password;
-                self::$pdo = new PDO( $dsn, $account, $password);
-            }
-            $this->connection = $this->createDefaultDBConnection(
-                self::$pdo,
-                self::$db_dbname
-            );
-        }
+        $dsn = self::$db_dsn_type
+            .":host="  . self::$db_dsn_host
+            .";dbname=". self::$db_dbname
+        ;
+        // 設定登入資料庫資訊
+        $this->SetLoginDatabaseInfo($dsn, self::$db_dbname, self::$db_account, self::$db_password);
+
+        // 保存共用的pdo和connectioin
+        $this->connection = parent::getConnection();
+        self::$pdo = $this->GetPdo();
+
         return $this->connection;
     }
 
-    public function getDataSet() {
+    protected function getDataSet() {
         return $this->createXMLDataSet(__DIR__ . '/_files/testSeedData.xml');
     }
 
     public function testSimple() {
-        // 直接使用已經建好的pdo
         $conn = $this->connection;
         $pdo = self::$pdo;
 
