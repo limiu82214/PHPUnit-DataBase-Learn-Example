@@ -1,3 +1,3 @@
 # PHPUnit MySQL Simplest Example
 
-這個範例中共享了pdo和connection，並且把MySQL的登入資料從函式中拉出來。
+這個範例中建立了一個自訂的Database_TestCase，這樣就不用繼承PHPUnit_Extensions_Database_TestCase了
