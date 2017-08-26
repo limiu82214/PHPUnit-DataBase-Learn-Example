@@ -5,3 +5,5 @@
 #### 以分支來區別不同的範例 (注意，這是有順序性的)
 * mysql_simplest : MySQL版本的極簡範例
 * mysql_share_pdo_connection : 共享資料庫連結的版本
+* mysql_custom_database_testcase : 自訂一個database介面版本(Nimo_Database_TestCase)
+
