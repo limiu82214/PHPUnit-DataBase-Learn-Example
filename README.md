@@ -7,3 +7,4 @@
 * mysql_share_pdo_connection : 共享資料庫連結的版本
 * mysql_custom_database_testcase : 自訂一個database介面版本(Nimo_Database_TestCase)
 
+Nimo_Database_TestCase 將會在 [這裡](https://github.com/limiu82214/PHPUnit-Nimo_Database_TestCase "Nimo_Database_TestCase") 繼續維護。
