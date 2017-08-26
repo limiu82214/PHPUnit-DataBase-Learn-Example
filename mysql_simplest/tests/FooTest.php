@@ -56,7 +56,7 @@ class FooTest extends \PHPUnit_Extensions_Database_TestCase {
         $account = "nimo";
         $password = "nimo";
         $pdo = new PDO($dsn, $account, $password);
-        $db = $this->createDefaultDBConnection($pdo, $dbname);
+        $conn = $this->createDefaultDBConnection($pdo, $dbname);
 
         $foo = new Foo($pdo);
 
@@ -64,7 +64,7 @@ class FooTest extends \PHPUnit_Extensions_Database_TestCase {
         $foo->insert(array('name'=>'dong', 'age'=>'23'));
 
         // 用 createQueryTable() 取出資料庫現在的資料
-        $actual = $db->createQueryTable('test_table', 'SELECT * FROM test_table');
+        $actual = $conn->createQueryTable('test_table', 'SELECT * FROM test_table');
 
         // 拿出先準備好的資料表 ( 他應該要與加完一筆資料後的資料表一樣 )
         $data_set = $this->createXMLDataSet(__DIR__ . '/_files/testExpectedData.xml');
